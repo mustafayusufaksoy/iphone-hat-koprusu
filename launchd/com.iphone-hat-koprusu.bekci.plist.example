@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  ~/Library/LaunchAgents/com.iphone-hat-koprusu.bekci.plist olarak kopyalayın,
+  BETIK_YOLU kısmını kendi yolunuzla değiştirin, sonra:
+    launchctl load ~/Library/LaunchAgents/com.iphone-hat-koprusu.bekci.plist
+-->
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.iphone-hat-koprusu.bekci</string>
+  <key>ProgramArguments</key><array>
+    <string>/bin/bash</string>
+    <string>BETIK_YOLU/scripts/kopru-bekci.sh</string>
+  </array>
+  <key>EnvironmentVariables</key><dict>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StartInterval</key><integer>120</integer>
+  <key>RunAtLoad</key><true/>
+</dict></plist>
