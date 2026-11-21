@@ -7,7 +7,7 @@ jobs:
   shellcheck:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: bash -n scripts/*.sh
       - run: shellcheck scripts/*.sh
       - run: python3 -c "import sys, xml.dom.minidom as m; [m.parse(f) for f in sys.argv[1:]]" launchd/*.plist.example assets/*.svg
