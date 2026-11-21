@@ -6,14 +6,23 @@
 
 [![test](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/actions/workflows/test.yml/badge.svg)](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/actions/workflows/test.yml)
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Android](https://img.shields.io/badge/Android-12-3DDC84?logo=android&logoColor=white)
+![iPhone](https://img.shields.io/badge/iPhone-SIM%27siz-111827?logo=apple&logoColor=white)
+![Root yok](https://img.shields.io/badge/root-gerekmez-16a34a)
+![Ücretsiz](https://img.shields.io/badge/maliyet-0%20TL-f97316)
+![Linphone](https://img.shields.io/badge/SIP-Linphone-2563eb)
 
-## Sorun
+<p align="center">
+  <img src="assets/gelen-arama.svg" alt="Gelen arama: arayan → Android'deki hat → sip.linphone.org → iPhone'da Linphone çalar, iki yönlü konuşulur" width="100%">
+</p>
+
+## 🤔 Sorun
 
 Yurt dışından getirilen ve IMEI kaydı yapılmamış bir iPhone'a Türk hattı takılınca hat kısa sürede engelleniyor. Hat ikinci bir Android telefonda duruyor, ama iki telefonla gezmek istemiyorsunuz: elinizde hep iPhone var, aramalar Android'e geliyor.
 
 Bu repo, Android'deki hattı internet üzerinden iPhone'a taşıyan bir kurulumun tarifi ve bakım betikleri. Hat, kayıtlı Android telefonda kalır; IMEI kaydı atlatılmaz.
 
-## Ne çalışıyor
+## ✅ Ne çalışıyor
 
 Gerçek bir kurulumda (TECNO SPARK 8C, Android 12, MediaTek, Turkcell) Kasım 2026'da test edildi:
 
@@ -27,16 +36,9 @@ Gerçek bir kurulumda (TECNO SPARK 8C, Android 12, MediaTek, Turkcell) Kasım 20
 | iPhone'dan Android hattıyla SMS göndermek | ❌ yok |
 | Android yeniden başlayınca kendiliğinden toparlanma | ❌ Shizuku elle başlatılmalı |
 
-## Nasıl çalışır
+## ⚙️ Nasıl çalışır
 
-```mermaid
-flowchart LR
-  A[Arayan] -->|GSM / VoLTE| B[Android<br/>Voice SIP Agent + Shizuku]
-  B -->|SIP TLS + SRTP| C[sip.linphone.org<br/>ücretsiz hesaplar]
-  C -->|push + SIP| D[iPhone<br/>Linphone]
-  B -->|SmsForwarder| E[Telegram botu]
-  E --> D
-```
+Yukarıdaki animasyon gelen aramanın yolunu gösteriyor: hat çalar, Android aramayı internete aktarır, iPhone çalar, iki yönlü konuşulur.
 
 - **[Voice SIP Agent](https://github.com/sparkcyf/android-voice-sip-agent)** Android'de gelen aramayı yakalar, sesi alır ve bir SIP aramasına köprüler. Root gerektirmez; ayrıcalıklı işlemleri **[Shizuku](https://github.com/RikkaApps/Shizuku)** üzerinden yapar.
 - İki ücretsiz **[Linphone](https://www.linphone.org/)** hesabı açılır: biri Android'de (köprü), biri iPhone'da. Android, aramayı iPhone'un hesabına yönlendirir.
@@ -45,16 +47,16 @@ flowchart LR
 
 Bu repodaki kod yalnızca bakım betikleri; asıl işi yukarıdaki açık kaynak projeler yapar.
 
-## Gerekenler
+## 🧰 Gerekenler
 
 - Hattın takılı olduğu bir **Android** telefon (Android 12 ile test edildi; Android 11 ve altı denenmedi). Açık, şarjda ve internete bağlı kalmalı; yanınızda olması gerekmiyor.
 - İnternete bağlı bir **iPhone** ve App Store'dan **Linphone**.
 - İlk kurulum için bir bilgisayar ve **adb** (`brew install android-platform-tools`). Sonrasında bilgisayar gerekmez.
 - [subscribe.linphone.org](https://subscribe.linphone.org/) adresinden e-postayla açılan **iki ücretsiz Linphone hesabı**. Uygulama içinden telefon numarasıyla kayıt Türkiye'de reddedilebiliyor.
 
-## Kurulum
+## 🛠️ Kurulum
 
-### 1. Android: Shizuku
+### 1️⃣ Android: Shizuku
 
 1. Geliştirici seçeneklerini açın, **USB hata ayıklama**'yı ve **Kablosuz hata ayıklama**'yı etkinleştirin.
 2. **Shizuku 13.5.4**'ü kurun. 13.6.0 bazı MediaTek / Transsion telefonlarda çöküyor.
@@ -64,7 +66,7 @@ Bu repodaki kod yalnızca bakım betikleri; asıl işi yukarıdaki açık kaynak
 adb shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh
 ```
 
-### 2. Android: Voice SIP Agent
+### 2️⃣ Android: Voice SIP Agent
 
 [Releases](https://github.com/sparkcyf/android-voice-sip-agent/releases) sayfasından APK'yı kurun (v0.4.2 ile test edildi), açın, **Health → Grant Shizuku** deyin ve ayarları girin:
 
@@ -89,7 +91,7 @@ scripts/telefonu-hazirla.sh
 
 Telefonun kendi "telefon yöneticisi" uygulaması varsa (Transsion'da **Phone Master / Telefon Yöneticisi**) Shizuku, Voice SIP Agent ve SmsForwarder'ı **kilit ekranı temizleme** listesinden çıkarın ve **otomatik başlatma**'ya izin verin. Bu yapılmazsa ekran kilitlenince Shizuku kapatılıyor.
 
-### 3. iPhone: Linphone
+### 3️⃣ iPhone: Linphone
 
 - iPhone'un hesabıyla giriş yapın. **Allow push notifications** açık olsun.
 - Settings → Advanced calls settings → **Media encryption: SRTP**, **Media encryption mandatory: açık**. Android tarafı SRTP zorunluyken bu uymazsa arama `488 Not Acceptable` ile düşer.
@@ -97,13 +99,17 @@ Telefonun kendi "telefon yöneticisi" uygulaması varsa (Transsion'da **Phone Ma
 
 Artık hatta gelen aramalar iPhone'da çalar.
 
-### 4. İsteğe bağlı: SMS'leri Telegram'a iletmek
+### 4️⃣ İsteğe bağlı: SMS'leri Telegram'a iletmek
 
 SmsForwarder'ı kurun ([Releases](https://github.com/pppscn/SmsForwarder/releases), arm64 APK). Play Protect uygulamayı engelleyebilir; kurulumdan sonra taramayı tekrar açın. @BotFather'dan bir bot açın, **发送通道** (kanal) olarak Telegram botu ekleyin, **转发规则** (kural) ile SMS'leri ve cevapsız aramaları bu kanala yönlendirin.
 
 > SmsForwarder banka kodları dahil bütün SMS'leri Telegram'a gönderir. Bot token'ını ve sohbeti kimseyle paylaşmayın.
 
-## iPhone'dan hat ile dış arama
+## 📤 iPhone'dan hat ile dış arama
+
+<p align="center">
+  <img src="assets/dis-arama.svg" alt="Dış arama: iPhone'da numara yazılır → sip.linphone.org → Android kendi hattından arar → iki yönlü konuşma" width="100%">
+</p>
 
 Voice SIP Agent aranacak numarayı `X-VSA-Dial` SIP başlığından okur. iPhone'daki Linphone, adrese eklenen `?X-VSA-Dial=` kısmını bu başlık olarak gönderiyor:
 
@@ -121,7 +127,7 @@ scripts/dis-arama.sh kapat   # dış arama tamamen kapalı
 > [!WARNING]
 > Voice SIP Agent aramanın **kimden** geldiğini kontrol etmiyor. Android'in Linphone hesap adını bilen biri, telefonunuza izinli numaraları aratabilir. Hesap adını tahmin edilmesi zor seçin, kimseyle paylaşmayın, izinli listeyi dar tutun. Dış arama kullanmıyorsanız `kapat` deyin.
 
-## Günlük kullanım
+## 🔋 Günlük kullanım
 
 Telefon kapanmadıkça bir şey yapmanız gerekmez. Shizuku bir kez başladıktan sonra Wi-Fi'ın kopması, mobil veriye geçilmesi veya Kablosuz hata ayıklamanın kapanması onu durdurmuyor.
 
@@ -136,7 +142,7 @@ scripts/kopru-baslat.sh 192.168.1.50    # Wi-Fi ile
 
 > `adb tcpip` telefondaki adb hizmetini yeniden başlatır ve **çalışan Shizuku'yu öldürür**. Önce 5555'i açın, sonra Shizuku'yu başlatın.
 
-### Mac'te otomatik bekçi
+### 🐕 Mac'te otomatik bekçi
 
 Telefon evde aynı Wi-Fi'dayken Mac her 2 dakikada bir kontrol eder; Shizuku ya da Voice SIP Agent kapandıysa yeniden başlatır:
 
@@ -148,7 +154,7 @@ launchctl load ~/Library/LaunchAgents/com.iphone-hat-koprusu.bekci.plist
 
 Kayıtlar `~/Library/Logs/iphone-hat-koprusu.log` dosyasında. Telefon yeniden başlarsa bekçi Shizuku'yu başlatamaz; o adım telefonda elle yapılmalı.
 
-## Sorun giderme
+## 🩺 Sorun giderme
 
 | Belirti | Sebep | Çözüm |
 |---|---|---|
@@ -163,7 +169,7 @@ Kayıtlar `~/Library/Logs/iphone-hat-koprusu.log` dosyasında. Telefon yeniden b
 | Dış arama `403 FORBIDDEN` ile düşüyor | Numara izinli listede değil | `05…` biçiminde yazın ya da listeyi güncelleyin |
 | Arayanın adı yerine numara görünüyor | iPhone rehberiyle eşleşmiyor | International Prefix = +90, Kişilere tam erişim |
 
-## Denenen ve vazgeçilen yollar
+## 🧪 Denenen ve vazgeçilen yollar
 
 | Yol | Neden olmadı |
 |---|---|
@@ -174,17 +180,19 @@ Kayıtlar `~/Library/Logs/iphone-hat-koprusu.log` dosyasında. Telefon yeniden b
 | [gsm2sip](https://github.com/pulpoff/gsm2sip) | Root gerektiriyor |
 | Ücretli SIP numarası | Ücretsiz Linphone hesapları yetti |
 
-## Teşekkür
+## 🙏 Teşekkür
 
 Asıl iş [sparkcyf/android-voice-sip-agent](https://github.com/sparkcyf/android-voice-sip-agent) (GPL-2.0), [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku), [pppscn/SmsForwarder](https://github.com/pppscn/SmsForwarder) ve [Linphone](https://www.linphone.org/) projelerinin. Bu repo onların kodunu içermez; yalnızca kurulum tarifi ve bakım betikleri.
 
-## Lisans
+## 📄 Lisans
 
 [MIT](LICENSE). Bu repodaki betikler ve belgeler içindir; bağlantı verilen uygulamaların kendi lisansları geçerlidir.
 
 ---
 
 ## English
+
+<p align="center"><img src="assets/gelen-arama.svg" alt="Incoming call flow animation" width="80%"></p>
 
 **Bridge a SIM in an Android phone to a SIM-less iPhone over the internet: incoming calls ring on the iPhone and can be answered, and the iPhone can place calls through the Android's SIM.** No root, no cable, no paid service. SMS and missed calls can be forwarded to Telegram.
 
