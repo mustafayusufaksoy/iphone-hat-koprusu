@@ -1,0 +1,39 @@
+name: Cihaz raporu / Device report
+description: Rehberi kendi telefonunda denedin; çalıştı ya da çalışmadı
+labels: [device-report]
+body:
+  - type: input
+    id: telefon
+    attributes:
+      label: Hattın takılı olduğu telefon / Android phone
+      placeholder: "ör. Google Pixel 8, Android 15, Tensor G3"
+    validations:
+      required: true
+  - type: input
+    id: alici
+    attributes:
+      label: Aramaları alan cihaz / Receiving device
+      placeholder: "ör. iPhone 13 / Pixel 9 (Linphone)"
+    validations:
+      required: true
+  - type: input
+    id: operator
+    attributes:
+      label: Operatör / Carrier
+      placeholder: "ör. Vodafone TR"
+  - type: checkboxes
+    id: sonuc
+    attributes:
+      label: Neler çalıştı? / What worked?
+      options:
+        - label: Gelen arama alan cihazda çaldı / Incoming call rang
+        - label: İki yönlü ses / Two-way audio
+        - label: Uygulama kapalıyken çaldı (push) / Rang with the app closed
+        - label: Mobil veride çalıştı / Worked on mobile data
+        - label: Dış arama / Outbound calling
+        - label: SMS → Telegram
+  - type: textarea
+    id: notlar
+    attributes:
+      label: Notlar / Notes
+      description: Farklı yaptığın ayarlar, karşılaştığın sorunlar ve çözümleri

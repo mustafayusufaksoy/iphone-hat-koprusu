@@ -1,0 +1,44 @@
+name: Hata bildirimi / Bug report
+description: Kurulumda ya da kullanımda bir şey çalışmıyor
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Önce README'deki **Sorun giderme** tablosuna bak. Şifre, token ve telefon numarası **paylaşma**.
+        Check the troubleshooting table in the README first. Never share passwords, tokens or phone numbers.
+  - type: textarea
+    id: sorun
+    attributes:
+      label: Ne oldu? / What happened?
+      description: Ne bekliyordun, ne oldu? (ör. "arayan meşgul duyuyor", "iPhone çalmıyor", "ses gelmiyor")
+    validations:
+      required: true
+  - type: input
+    id: telefon
+    attributes:
+      label: Hattın takılı olduğu telefon / Android phone
+      placeholder: "ör. Samsung Galaxy A15, Android 14, Exynos"
+    validations:
+      required: true
+  - type: input
+    id: alici
+    attributes:
+      label: Aramaları alan cihaz / Receiving device
+      placeholder: "ör. iPhone 15, iOS 27, Linphone 6.x"
+  - type: input
+    id: surumler
+    attributes:
+      label: Sürümler / Versions
+      placeholder: "Voice SIP Agent 0.4.2, Shizuku 13.5.4"
+  - type: input
+    id: operator
+    attributes:
+      label: Operatör ve bağlantı / Carrier and network
+      placeholder: "ör. Turkcell, VoLTE açık, ev Wi-Fi'ı"
+  - type: textarea
+    id: kayit
+    attributes:
+      label: Kayıtlar / Logs
+      description: "`adb logcat -d -s VoiceSipAgent | tail -100` çıktısı (numaralar zaten gizli)"
+      render: text

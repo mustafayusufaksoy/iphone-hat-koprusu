@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Güvenlik açığı / Security vulnerability
+    url: https://github.com/mustafayusufaksoy/iphone-hat-koprusu/security/advisories/new
+    about: Güvenlik sorunlarını herkese açık issue yerine buradan özel olarak bildir.
+  - name: Voice SIP Agent hataları / Voice SIP Agent bugs
+    url: https://github.com/sparkcyf/android-voice-sip-agent/issues
+    about: Uygulamanın kendisindeki hatalar için upstream projeye yaz.
