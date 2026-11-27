@@ -54,6 +54,16 @@ Bu repodaki kod yalnızca bakım betikleri; asıl işi yukarıdaki açık kaynak
 - İlk kurulum için bir bilgisayar ve **adb** (`brew install android-platform-tools`). Sonrasında bilgisayar gerekmez.
 - [subscribe.linphone.org](https://subscribe.linphone.org/) adresinden e-postayla açılan **iki ücretsiz Linphone hesabı**. Uygulama içinden telefon numarasıyla kayıt Türkiye'de reddedilebiliyor.
 
+## 📱 Denenen telefonlar
+
+Hattın takılı olduğu Android telefona göre ses ayarları değişebiliyor. Kendi telefonunuzda denediyseniz, çalışsın ya da çalışmasın, bir [cihaz raporu](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/issues/new?template=cihaz-raporu.yml) açın; tabloya adınızla eklenir. İsterseniz satırı kendiniz ekleyip PR da atabilirsiniz.
+
+| Android telefon | İşlemci | Android | Gelen arama + ses | Dış arama | Not | Bildiren |
+|---|---|---|---|---|---|---|
+| TECNO SPARK 8C | MediaTek | 12 | ✅ | ✅ | "Mute call audio" kapalı olmalı, Shizuku 13.5.4 | [@mustafayusufaksoy](https://github.com/mustafayusufaksoy) |
+
+Voice SIP Agent'ın kendi denediği telefonlar (Pixel, POCO, Redmi, Samsung A15 vb.) [kendi README'sinde](https://github.com/sparkcyf/android-voice-sip-agent#readme) listeleniyor.
+
 ## 🛠️ Kurulum
 
 ### 1️⃣ Android: Shizuku
@@ -160,6 +170,7 @@ Kayıtlar `~/Library/Logs/iphone-hat-koprusu.log` dosyasında. Telefon yeniden b
 |---|---|---|
 | Aramalar iPhone'a gelmiyor, Shizuku "çalışmıyor" | Telefon yeniden başlamış (çoğu zaman şarj bitmiş) | Wi-Fi → Kablosuz hata ayıklama → Shizuku Başlat |
 | Arayan meşgul duyuyor | Take over açık ama SIP kaydı yok | SIP ayarlarını tamamlayın ya da Take over'ı kapatın |
+| Cevaplanınca birkaç saniyede düşüyor, ses yok | Wi-Fi araması (VoWiFi) açık, ses modemden geçmiyor; ya da ses yöntemi telefona uymuyor | Telefonda Wi-Fi aramasını kapatın; Voice SIP Agent'ta Cellular audio = Direct telephony, "Mute call audio" kapalı |
 | Konuşma sessiz (logda `downPeak=0`) | "Mute call audio" açık (MediaTek) ya da scrcpy `--audio-source=voice-call` açık | "Mute call audio" kapalı; scrcpy'yi `--no-audio` ile açın |
 | SIP kaydı `403 Forbidden` | Kullanıcı adı / şifre yanlış | Hesap adını harfi harfine kontrol edin |
 | Arama `404 Not Found` | SIP target yanlış yazılmış | iPhone hesabının adını kontrol edin |
@@ -201,6 +212,8 @@ Typical case: a phone brought from abroad that cannot use a local SIM (in Turkey
 **How:** [Voice SIP Agent](https://github.com/sparkcyf/android-voice-sip-agent) on the Android (with [Shizuku](https://github.com/RikkaApps/Shizuku), no root) bridges cellular calls to SIP through two free [Linphone](https://www.linphone.org/) accounts on `sip.linphone.org`; the iPhone runs the Linphone app with push notifications. Optional [SmsForwarder](https://github.com/pppscn/SmsForwarder) sends SMS to a Telegram bot.
 
 **Tested** in November 2026 on a TECNO SPARK 8C (Android 12, MediaTek): incoming calls with two-way audio over Wi-Fi and mobile data, ringing with Linphone closed, outbound dialing, SMS forwarding.
+
+**Tested phones:** see the table in the Turkish section; please open a [device report](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/issues/new?template=cihaz-raporu.yml) (works or not) and you will be added. If a call drops a few seconds after answering with no audio, turn off Wi-Fi calling (VoWiFi) on the Android and use Cellular audio = Direct telephony with call-audio mute off.
 
 **Key settings:** TLS on port 5061 with SRTP *mandatory* on both sides (otherwise `488`); on MediaTek keep "Mute call audio on this phone" **off** (otherwise silent audio); use Shizuku 13.5.4 (13.6.0 crashes on some MediaTek/Transsion devices); exclude the apps from vendor lock-screen cleaners.
 
