@@ -61,6 +61,7 @@ Hattın takılı olduğu Android telefona göre ses ayarları değişebiliyor. K
 | Android telefon | İşlemci | Android | Gelen arama + ses | Dış arama | Not | Bildiren |
 |---|---|---|---|---|---|---|
 | TECNO SPARK 8C | MediaTek | 12 | ✅ | ✅ | "Mute call audio" kapalı olmalı, Shizuku 13.5.4 | [@mustafayusufaksoy](https://github.com/mustafayusufaksoy) |
+| Samsung Galaxy S10 (SM-G973F) | Exynos 9820 | 12 | ❌ arama gelir ama ses yok, 3-5 sn'de düşer | denenmedi | Android 12'de Samsung `TELEPHONY_TX` çıkışını açmıyor; Call Redirection Android 13+ istiyor ([#2](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/issues/2)) | [@deerMurat](https://github.com/deerMurat) |
 
 Voice SIP Agent'ın kendi denediği telefonlar (Pixel, POCO, Redmi, Samsung A15 vb.) [kendi README'sinde](https://github.com/sparkcyf/android-voice-sip-agent#readme) listeleniyor.
 
@@ -170,7 +171,7 @@ Kayıtlar `~/Library/Logs/iphone-hat-koprusu.log` dosyasında. Telefon yeniden b
 |---|---|---|
 | Aramalar iPhone'a gelmiyor, Shizuku "çalışmıyor" | Telefon yeniden başlamış (çoğu zaman şarj bitmiş) | Wi-Fi → Kablosuz hata ayıklama → Shizuku Başlat |
 | Arayan meşgul duyuyor | Take over açık ama SIP kaydı yok | SIP ayarlarını tamamlayın ya da Take over'ı kapatın |
-| Cevaplanınca birkaç saniyede düşüyor, ses yok | Wi-Fi araması (VoWiFi) açık, ses modemden geçmiyor; ya da ses yöntemi telefona uymuyor | Telefonda Wi-Fi aramasını kapatın; Voice SIP Agent'ta Cellular audio = Direct telephony, "Mute call audio" kapalı |
+| Cevaplanınca birkaç saniyede düşüyor, ses yok | Wi-Fi araması (VoWiFi) açık ya da ses yöntemi telefona uymuyor. Logda `TYPE_TELEPHONY output unavailable` ve `call redirection API unavailable` varsa telefon bu yönteme uyumsuz | Wi-Fi aramasını kapatın; Cellular audio = Direct telephony, "Mute call audio" kapalı. Uyumsuzluk hatası varsa ayarla çözülmüyor (Android 13+ ya da başka telefon gerekir) |
 | Konuşma sessiz (logda `downPeak=0`) | "Mute call audio" açık (MediaTek) ya da scrcpy `--audio-source=voice-call` açık | "Mute call audio" kapalı; scrcpy'yi `--no-audio` ile açın |
 | SIP kaydı `403 Forbidden` | Kullanıcı adı / şifre yanlış | Hesap adını harfi harfine kontrol edin |
 | Arama `404 Not Found` | SIP target yanlış yazılmış | iPhone hesabının adını kontrol edin |
@@ -213,7 +214,7 @@ Typical case: a phone brought from abroad that cannot use a local SIM (in Turkey
 
 **Tested** in November 2026 on a TECNO SPARK 8C (Android 12, MediaTek): incoming calls with two-way audio over Wi-Fi and mobile data, ringing with Linphone closed, outbound dialing, SMS forwarding.
 
-**Tested phones:** see the table in the Turkish section; please open a [device report](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/issues/new?template=cihaz-raporu.yml) (works or not) and you will be added. If a call drops a few seconds after answering with no audio, turn off Wi-Fi calling (VoWiFi) on the Android and use Cellular audio = Direct telephony with call-audio mute off.
+**Tested phones:** see the table in the Turkish section; please open a [device report](https://github.com/mustafayusufaksoy/iphone-hat-koprusu/issues/new?template=cihaz-raporu.yml) (works or not) and you will be added. If a call drops a few seconds after answering with no audio, turn off Wi-Fi calling (VoWiFi) on the Android and use Cellular audio = Direct telephony with call-audio mute off. If the log shows `TYPE_TELEPHONY output unavailable` and `call redirection API unavailable`, the phone cannot inject call audio this way (e.g. Galaxy S10 on Android 12); settings will not fix it.
 
 **Key settings:** TLS on port 5061 with SRTP *mandatory* on both sides (otherwise `488`); on MediaTek keep "Mute call audio on this phone" **off** (otherwise silent audio); use Shizuku 13.5.4 (13.6.0 crashes on some MediaTek/Transsion devices); exclude the apps from vendor lock-screen cleaners.
 
